@@ -1,18 +1,28 @@
 import React from 'react';
-import { Image, keyframes, usePrefersReducedMotion } from '@chakra-ui/react';
-import logo from './logo.svg';
+import { Flex, Icon, Text } from '@chakra-ui/react';
+import { Link } from 'react-router-dom';
+import { BsFillLightningChargeFill } from 'react-icons/bs';
 
-const spin = keyframes`
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-`;
+const Logo = () => (
+	<Flex alignItems='center' cursor='pointer'>
+		<Icon
+			as={BsFillLightningChargeFill}
+			mr='2'
+			w={['5', '7']}
+			h={['5', '7']}
+			fill='red.500'
+		/>
+		<Link to='/'>
+			<Text
+				margin='0'
+				color='red.500'
+				fontWeight='medium'
+				fontSize={['xl', '2xl']}
+			>
+				Streak
+			</Text>
+		</Link>
+	</Flex>
+);
 
-export const Logo = props => {
-  const prefersReducedMotion = usePrefersReducedMotion();
-
-  const animation = prefersReducedMotion
-    ? undefined
-    : `${spin} infinite 20s linear`;
-
-  return <Image animation={animation} src={logo} {...props} />;
-};
+export default Logo;

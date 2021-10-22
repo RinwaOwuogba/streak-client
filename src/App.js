@@ -1,42 +1,26 @@
 import React from 'react';
-import {
-	ChakraProvider,
-	Box,
-	Text,
-	Link,
-	VStack,
-	Code,
-	Grid,
-	theme,
-} from '@chakra-ui/react';
-import { ColorModeSwitcher } from './ColorModeSwitcher';
-import { Logo } from './Logo';
+import { Route, Switch } from 'react-router-dom';
+import { useAuth0 } from '@auth0/auth0-react';
+import NavBar from './components/nav-bar';
+import { Info, Home } from './views';
+import Loading from './components/loading';
+import ProtectedRoute from './auth/protected-route';
 
-function App() {
+const App = () => {
+	const { isLoading } = useAuth0();
+
+	if (isLoading) {
+		return <Loading />;
+	}
+
 	return (
-		<ChakraProvider theme={theme}>
-			<Box textAlign="center" fontSize="xl">
-				<Grid minH="100vh" p={3}>
-					<ColorModeSwitcher justifySelf="flex-end" />
-					<VStack spacing={8}>
-						<Logo h="40vmin" pointerEvents="none" />
-						<Text>
-							Edit <Code fontSize="xl">src/App.js</Code> and save to reload.
-						</Text>
-						<Link
-							color="teal.500"
-							href="https://chakra-ui.com"
-							fontSize="2xl"
-							target="_blank"
-							rel="noopener noreferrer"
-						>
-							Learn Chakra
-						</Link>
-					</VStack>
-				</Grid>
-			</Box>
-		</ChakraProvider>
+		<>
+			<NavBar />
+			<Switch>
+				<Route path='/' exact component={Info} />
+				<ProtectedRoute path='/home' component={Home} />
+			</Switch>
+		</>
 	);
-}
-
+};
 export default App;
