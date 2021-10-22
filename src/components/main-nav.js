@@ -12,7 +12,7 @@ const MainNav = () => {
 				Home
 			</Link>
 
-			<Link as={NavLink} to='/streaks' exact>
+			<Link as={NavLink} to='/home/streaks' exact>
 				Streaks
 			</Link>
 		</HStack>
