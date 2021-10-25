@@ -1,18 +1,27 @@
 import React from 'react';
-import { Flex, HStack } from '@chakra-ui/react';
+import { Flex, HStack, useBreakpointValue } from '@chakra-ui/react';
 import MainNav from './main-nav';
+import MobileMenu from './mobile-menu';
 import AuthNav from './auth-nav';
 import Logo from '../Logo';
 
-const NavBar = () => (
-	<Flex as='nav' padding='5' justifyContent='space-between'>
-		<Logo />
+const NavBar = () => {
+	const showMobileMenu = useBreakpointValue([true, false]);
 
-		<HStack spacing='10px'>
-			<MainNav />
-			<AuthNav />
-		</HStack>
-	</Flex>
-);
+	return (
+		<Flex as='nav' padding='5' justifyContent='space-between'>
+			<Logo />
+
+			{showMobileMenu ? (
+				<MobileMenu />
+			) : (
+				<HStack spacing='10px'>
+					<MainNav />
+					<AuthNav />
+				</HStack>
+			)}
+		</Flex>
+	);
+};
 
 export default NavBar;
