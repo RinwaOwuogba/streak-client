@@ -1,5 +1,5 @@
-import ExternalApi from './external-api';
 import Home from './home';
 import Info from './info';
+import Goal from './goal';
 
-export { ExternalApi, Home, Info };
+export { Home, Info, Goal };

@@ -12,8 +12,8 @@ const MainNav = () => {
 				Home
 			</Link>
 
-			<Link as={NavLink} to='/home/streaks' exact>
-				Streaks
+			<Link as={NavLink} to='/home/goals' exact>
+				Goals
 			</Link>
 		</HStack>
 	) : null;

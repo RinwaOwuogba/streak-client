@@ -7,8 +7,8 @@ import {
 } from '@chakra-ui/react';
 import { useAuth0 } from '@auth0/auth0-react';
 import { useRouteMatch, useHistory } from 'react-router-dom';
-import StreakCounter from '../components/streakCounter';
-import StreaksDrawer from '../components/streaksDrawer';
+import StreakCounter from '../components/streak-counter';
+import GoalsDrawer from '../components/goals-drawer';
 
 const Home = () => {
 	const history = useHistory();
@@ -21,11 +21,11 @@ const Home = () => {
 	const { name } = user || { name: 'Bolarinwa Owuogba' };
 
 	useEffect(() => {
-		if (match?.params?.action === 'streaks') {
+		if (match?.params?.action === 'goals') {
 			onOpen();
 		}
 
-		onOpen();
+		// onOpen();
 	}, [match]);
 
 	const handleCloseDrawer = () => {
@@ -34,15 +34,16 @@ const Home = () => {
 	};
 
 	return (
-		<Flex direction='column' padding='3'>
+		<Flex direction='column' padding='5'>
 			<Text mb='10'>Welcome, {name}</Text>
 
 			<StreakCounter />
 
-			<StreaksDrawer
+			<GoalsDrawer
 				drawerSize={drawerSize}
 				isOpen={isOpen}
 				handleCloseDrawer={handleCloseDrawer}
+				user={user}
 			/>
 		</Flex>
 	);

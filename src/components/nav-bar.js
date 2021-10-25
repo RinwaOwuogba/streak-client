@@ -5,7 +5,7 @@ import AuthNav from './auth-nav';
 import Logo from '../Logo';
 
 const NavBar = () => (
-	<Flex as='nav' padding='3' justifyContent='space-between'>
+	<Flex as='nav' padding='5' justifyContent='space-between'>
 		<Logo />
 
 		<HStack spacing='10px'>

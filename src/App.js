@@ -3,7 +3,7 @@ import { Route, Switch } from 'react-router-dom';
 import { useAuth0 } from '@auth0/auth0-react';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import NavBar from './components/nav-bar';
-import { Info, Home } from './views';
+import { Info, Home, Goal } from './views';
 import Loading from './components/loading';
 import ProtectedRoute from './auth/protected-route';
 
@@ -21,8 +21,10 @@ const App = () => {
 			<NavBar />
 			<Switch>
 				<Route path='/' exact component={Info} />
-				<Route path={['/home', '/home/streaks']} component={Home} />
-				{/* <ProtectedRoute path={['/home', '/home/streaks']} component={Home} /> */}
+				<Route path={['/home', '/home/goals']} component={Home} />
+				{/* <ProtectedRoute path={['/home', '/home/goals']} component={Home} /> */}
+				<Route path='/goals/:goalId' component={Goal} />
+				{/* <ProtectedRoute path='/goals/:goalId' component={Home} /> */}
 			</Switch>
 		</QueryClientProvider>
 	);
