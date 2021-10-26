@@ -1,5 +1,6 @@
 import Home from './home';
 import Info from './info';
-import Goal from './goal';
+import GoalDetails from './goal-details';
+import Goals from './goals';
 
-export { Home, Info, Goal };
+export { Home, Info, GoalDetails, Goals };

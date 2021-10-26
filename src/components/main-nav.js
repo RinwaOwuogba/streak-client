@@ -12,7 +12,7 @@ const MainNav = () => {
 				Home
 			</Link>
 
-			<Link as={NavLink} to='/home/goals' exact>
+			<Link as={NavLink} to='/goals' exact>
 				Goals
 			</Link>
 		</>

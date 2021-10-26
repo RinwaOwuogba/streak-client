@@ -1,12 +1,6 @@
 import React from 'react';
-import {
-	Text,
-	DrawerBody,
-	Spinner,
-	Flex,
-	Button,
-	VStack,
-} from '@chakra-ui/react';
+import { Text, Spinner, Flex, Button, VStack } from '@chakra-ui/react';
+import { Link } from 'react-router-dom';
 
 const dummyGoals = [
 	{
@@ -25,14 +19,14 @@ const dummyGoals = [
 const GoalsList = ({ status, goals = dummyGoals }) =>
 	({
 		loading: (
-			<DrawerBody>
+			<Flex>
 				<Spinner />
-			</DrawerBody>
+			</Flex>
 		),
 		error: (
-			<DrawerBody>
+			<Flex>
 				<Text> Error fetching goals</Text>
-			</DrawerBody>
+			</Flex>
 		),
 		success: (
 			<>
@@ -42,7 +36,15 @@ const GoalsList = ({ status, goals = dummyGoals }) =>
 
 				<VStack spacing='5px'>
 					{goals.map((goal) => (
-						<Button key={goal.id} variant='ghost' width='100%' pr='2' pl='2'>
+						<Button
+							key={goal.id}
+							as={Link}
+							to={`/goals/${goal.id}`}
+							variant='ghost'
+							width='100%'
+							pr='2'
+							pl='2'
+						>
 							<Flex
 								justifyContent='space-between'
 								width='100%'

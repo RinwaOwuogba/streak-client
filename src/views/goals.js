@@ -1,34 +1,19 @@
 import React, { useState } from 'react';
-import {
-	Drawer,
-	DrawerBody,
-	DrawerHeader,
-	DrawerOverlay,
-	DrawerContent,
-	Flex,
-	Button,
-	useToast,
-	Text,
-	IconButton,
-	useBreakpointValue,
-} from '@chakra-ui/react';
-import { BiArrowBack } from 'react-icons/bi';
+import { Flex, Button, useToast, Text } from '@chakra-ui/react';
 import { useAuth0 } from '@auth0/auth0-react';
 import { useQuery, useQueryClient } from 'react-query';
 import axios from 'axios';
 import { useForm } from 'react-hook-form';
 import { API_URL } from '../config';
-import GoalsList from './goals-list';
-import NewGoalModal from './new-goal-modal';
+import GoalsList from '../components/goals-list';
+import NewGoalModal from '../components/new-goal-modal';
 
-const GoalsDrawer = ({
-	handleCloseDrawer,
-	isOpen,
-	drawerSize,
-	user = { sub: 'sss' },
-}) => {
+const Goals = () => {
+	const { user: authUser } = useAuth0();
 	const queryClient = useQueryClient();
-	const hiddenDrawerNavigation = useBreakpointValue([false, true]);
+
+	const user = authUser || { id: 'kl' };
+
 	const toast = useToast();
 	const [isNewGoalModelOpen, setIsNewGoalModalOpen] = useState(false);
 	const { getAccessTokenSilently } = useAuth0();
@@ -70,7 +55,7 @@ const GoalsDrawer = ({
 				}
 			);
 
-			queryClient.invalidateQueries('goals');
+			queryClient.invalidateQueries('goals', { exact: true });
 			reset();
 			setIsNewGoalModalOpen(false);
 
@@ -93,28 +78,26 @@ const GoalsDrawer = ({
 	};
 
 	return (
-		<Drawer
-			placement='right'
-			onClose={handleCloseDrawer}
-			isOpen={isOpen}
-			size={drawerSize}
-		>
-			<DrawerOverlay />
-			<DrawerContent>
-				<DrawerHeader borderBottomWidth='1px'>
-					<Flex alignItems='center'>
-						<IconButton
-							onClick={handleCloseDrawer}
-							variant='ghost'
-							icon={<BiArrowBack />}
-							w='20px'
-							h='20px'
-							hidden={hiddenDrawerNavigation}
-						/>
-						<Text>Goals</Text>
-					</Flex>
-				</DrawerHeader>
-				<DrawerBody pt='5' pl='4' pr='4'>
+		<Flex direction='column' padding='5'>
+			<Text
+				W='100%'
+				textAlign='left'
+				fontSize='xl'
+				fontWeight='medium'
+				casing='uppercase'
+			>
+				Goals
+			</Text>
+
+			<Flex direction='column' width='100%' alignItems='center'>
+				<Flex
+					maxW='40rem'
+					width='100%'
+					direction='column'
+					border='2px'
+					borderColor='gray.100'
+					padding='5'
+				>
 					<GoalsList status={status} goals={goals} />
 
 					{status === 'success' ? (
@@ -131,10 +114,10 @@ const GoalsDrawer = ({
 						register={register}
 						isSubmitting={formState.isSubmitting}
 					/>
-				</DrawerBody>
-			</DrawerContent>
-		</Drawer>
+				</Flex>
+			</Flex>
+		</Flex>
 	);
 };
 
-export default GoalsDrawer;
+export default Goals;

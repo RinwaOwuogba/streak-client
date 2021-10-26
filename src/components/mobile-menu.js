@@ -28,7 +28,7 @@ const MobileMenu = () => {
 						<MenuItem as={NavLink} to='/home' exact>
 							Home
 						</MenuItem>
-						<MenuItem as={NavLink} to='/home/goals' exact>
+						<MenuItem as={NavLink} to='/goals' exact>
 							Goals
 						</MenuItem>
 						<MenuDivider />
