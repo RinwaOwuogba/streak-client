@@ -15,7 +15,7 @@ const NavBar = () => {
 			{showMobileMenu ? (
 				<MobileMenu />
 			) : (
-				<HStack spacing='10px'>
+				<HStack spacing='50px'>
 					<MainNav />
 					<AuthNav />
 				</HStack>

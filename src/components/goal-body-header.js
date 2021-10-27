@@ -56,7 +56,7 @@ const GoalBodyHeader = ({ goalName, handleUpdateGoal }) => {
 
 	return (
 		<Flex alignItems='center' mb='5'>
-			<Text fontSize='xl' mr='3'>
+			<Text fontSize='xl' fontWeight='bold' mr='3'>
 				{goalName}
 			</Text>
 			<Tooltip label='Edit goal name' aria-label='A tooltip'>

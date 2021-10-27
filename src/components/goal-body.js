@@ -1,6 +1,6 @@
 import React from 'react';
-import { Text, Button } from '@chakra-ui/react';
-import LogEntryChart from './log-entry-chart';
+import { Text, Button, Box } from '@chakra-ui/react';
+import LogEntries from './log-entries';
 
 const GoalBody = ({ goal, onDeleteGoal }) => {
 	const data = [
@@ -29,16 +29,24 @@ const GoalBody = ({ goal, onDeleteGoal }) => {
 
 	return (
 		<>
-			<Text as='i' color='gray.400'>
+			<Text as='i' color='gray.400' mb='10'>
 				Started: {new Date(goal.createdAt).toDateString()}{' '}
 			</Text>
 			<Text>
 				<pre>{JSON.stringify(goal, null, 4)}</pre>
 			</Text>
 
-			<LogEntryChart data={data} />
+			<Box mb='20'>
+				<LogEntries goal={goal} />
+			</Box>
 
-			<Button colorScheme='red' variant='outline' onClick={onDeleteGoal}>
+			<Button
+				pt='7'
+				pb='7'
+				colorScheme='red'
+				variant='outline'
+				onClick={onDeleteGoal}
+			>
 				Delete goal
 			</Button>
 		</>
