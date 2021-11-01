@@ -81,9 +81,9 @@ const GoalDetails = () => {
 	 * @param {*} formData
 	 */
 	const handleUpdateGoal = async (formData) => {
-		const token = await getAccessTokenSilently();
-
 		try {
+			const token = await getAccessTokenSilently();
+
 			await axios.put(
 				`${API_URL}/api/v1/users/${user.sub}/goals/${goalId}`,
 				{ name: formData.newName },
@@ -120,7 +120,7 @@ const GoalDetails = () => {
 				{
 					loading: <Spinner emptyColor='gray.200' color='red.500' size='xl' />,
 					success: (
-						<Flex direction='column' w='100%' maxW='40rem'>
+						<Flex direction='column' w='100%' maxW='50rem'>
 							<GoalBodyHeader
 								goalName={goal?.name}
 								handleUpdateGoal={handleUpdateGoal}
