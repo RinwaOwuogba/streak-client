@@ -1,13 +1,42 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Flex, Text, Button, Icon, useDisclosure } from '@chakra-ui/react';
 import { MdAdd } from 'react-icons/md';
 import { useForm } from 'react-hook-form';
+import axios from 'axios';
+import { useAuth0 } from '@auth0/auth0-react';
+import { useQuery } from 'react-query';
 import LogEntryChart from './log-entry-chart';
 import NewLogEntryModal from './new-log-entry-modal';
+import { API_URL } from '../config';
 
 const LogEntries = ({ goal }) => {
+	const { user, getAccessTokenSilently } = useAuth0();
 	const { isOpen, onOpen, onClose } = useDisclosure();
+
+	const ENTRY_FETCH_LIMIT = 7;
+
 	const { handleSubmit, register, formState, reset } = useForm();
+	const { data: logEntries, status } = useQuery(
+		'logEntries/recent',
+		async () => {
+			const token = await getAccessTokenSilently();
+
+			const { data: responseData } = await axios.get(
+				`${API_URL}/api/v1/users/${user.sub}/goals/${goal.id}/log-entries`,
+				{
+					headers: {
+						Authorization: `Bearer ${token}`,
+					},
+					params: {
+						limit: ENTRY_FETCH_LIMIT,
+						skip: 0,
+					},
+				}
+			);
+
+			return responseData.logEntries;
+		}
+	);
 
 	const data = [
 		{
@@ -54,11 +83,20 @@ const LogEntries = ({ goal }) => {
 		},
 	];
 
-	const handleCreateNewEntry = (formData) => {
-		console.log(formData);
-		// make API request
+	const handleCreateNewEntry = async (formData) => {
+		const token = await getAccessTokenSilently();
 
-		// show modal
+		await axios.post(
+			`${API_URL}/api/v1/users/${user.sub}/goals/log-entries`,
+			{
+				description: formData.entryDescription,
+			},
+			{
+				headers: {
+					Authorization: `Bearer ${token}`,
+				},
+			}
+		);
 
 		onOpen();
 	};
@@ -76,7 +114,7 @@ const LogEntries = ({ goal }) => {
 
 					<Button
 						rightIcon={<Icon as={MdAdd} />}
-						onClick={handleCreateNewEntry}
+						onClick={onOpen}
 						variant='outline'
 						fontSize='sm'
 					>
@@ -84,12 +122,8 @@ const LogEntries = ({ goal }) => {
 					</Button>
 				</Flex>
 
-				<Flex direction='column'>
+				<Flex direction='column' width='100%'>
 					<LogEntryChart data={data} />
-
-					<Button mt='7' variant='outline' width='max-content'>
-						Browse log entries
-					</Button>
 				</Flex>
 			</Flex>
 

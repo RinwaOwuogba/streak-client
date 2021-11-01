@@ -12,7 +12,7 @@ const queryClient = new QueryClient();
 const App = () => {
 	const { isLoading } = useAuth0();
 
-	// if (isLoading) {
+	// if (isLoading)	 {
 	// 	return <Loading />;
 	// }
 

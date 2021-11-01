@@ -32,11 +32,9 @@ const GoalBody = ({ goal, onDeleteGoal }) => {
 			<Text as='i' color='gray.400' mb='10'>
 				Started: {new Date(goal.createdAt).toDateString()}{' '}
 			</Text>
-			<Text>
-				<pre>{JSON.stringify(goal, null, 4)}</pre>
-			</Text>
+			<Text>{/* <pre>{JSON.stringify(goal, null, 4)}</pre> */}</Text>
 
-			<Box mb='20'>
+			<Box mb='20' w='100%'>
 				<LogEntries goal={goal} />
 			</Box>
 

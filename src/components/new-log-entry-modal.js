@@ -25,25 +25,26 @@ const NewLogEntryModal = ({
 	<Modal onClose={onClose} size='lg' isOpen={isOpen}>
 		<ModalOverlay />
 		<ModalContent>
-			<ModalHeader>Add optional note</ModalHeader>
+			<ModalHeader>New entry</ModalHeader>
 			<ModalCloseButton />
 			<ModalBody>
 				<Text mb='5'>
-					New entry created for{' '}
+					Creating a new entry created for{' '}
 					<Text as='span' fontWeight='bold'>
 						{goalName}{' '}
 					</Text>
-					today! Do you want to add an optional note?
+					today, do you want to add an optional description?
 				</Text>
 
 				<form onSubmit={handleSubmit}>
-					<FormControl id='entryNote' isRequired>
+					<FormControl id='entryDescription'>
 						<FormLabel>Description</FormLabel>
 						<Textarea
+							isRequired
 							resize='vertical'
-							id='entryNote'
+							id='entryDescription'
 							// eslint-disable-next-line react/jsx-props-no-spreading
-							{...register('entryNote	')}
+							{...register('entryDescription')}
 						/>
 					</FormControl>
 
@@ -53,12 +54,12 @@ const NewLogEntryModal = ({
 						isLoading={isSubmitting}
 						type='submit'
 					>
-						Add note
+						Create with description
 					</Button>
 				</form>
 			</ModalBody>
 			<ModalFooter>
-				<Button onClick={onClose}>No</Button>
+				<Button onClick={onClose}>Create without description</Button>
 			</ModalFooter>
 		</ModalContent>
 	</Modal>

@@ -120,7 +120,7 @@ const GoalDetails = () => {
 				{
 					loading: <Spinner emptyColor='gray.200' color='red.500' size='xl' />,
 					success: (
-						<Flex direction='column'>
+						<Flex direction='column' w='100%' maxW='40rem'>
 							<GoalBodyHeader
 								goalName={goal?.name}
 								handleUpdateGoal={handleUpdateGoal}
