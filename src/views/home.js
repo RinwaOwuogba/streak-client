@@ -9,7 +9,6 @@ import { API_URL } from '../config';
 
 const Home = () => {
 	const { user, getAccessTokenSilently } = useAuth0();
-	const { name } = user || { name: 'Bolarinwa Owuogba' };
 	const { data: goalsWithStreaks, status } = useQuery(
 		'goalsWithStreaks',
 		async () => {
@@ -33,7 +32,7 @@ const Home = () => {
 
 	return (
 		<Flex direction='column' padding='5'>
-			<Text mb='10'>Welcome, {name}</Text>
+			<Text mb='10'>Welcome, {user.name}</Text>
 
 			{
 				{
