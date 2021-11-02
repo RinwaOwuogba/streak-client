@@ -39,7 +39,7 @@ const GoalsList = ({ status, goals }) =>
 										fontWeight='medium'
 									>
 										<Text>{goal.name}</Text>
-										<Text>{goal.ongoingStreak} days</Text>
+										<Text>{goal.ongoingStreak} day(s)</Text>
 									</Flex>
 								</Button>
 							))}

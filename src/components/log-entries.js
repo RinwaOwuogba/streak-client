@@ -18,66 +18,17 @@ import format from 'date-fns/format';
 import LogEntryChart from './log-entry-chart';
 import { API_URL } from '../config';
 
-const hasActivityOnDate = (entries, targetDate) =>
-	entries.find((entry) =>
-		isSameDay(new Date(entry.createdAt), new Date(targetDate))
-	);
-
-const LogEntries = ({ goal }) => {
+const LogEntries = ({ goal, chartData, chartDataStatus }) => {
 	const queryClient = useQueryClient();
 	const toast = useToast();
 	const { user, getAccessTokenSilently } = useAuth0();
-
-	const ENTRY_FETCH_LIMIT = 7;
-	const { data: chartData, status } = useQuery(
-		'logEntries/chartData',
-		async () => {
-			const token = await getAccessTokenSilently();
-
-			// fetch recent log entries
-			const {
-				data: { logEntries },
-			} = await axios.get(
-				`${API_URL}/api/v1/users/${user.sub}/goals/${goal.id}/log-entries`,
-				{
-					headers: {
-						Authorization: `Bearer ${token}`,
-					},
-					params: {
-						limit: ENTRY_FETCH_LIMIT,
-						skip: 0,
-						startDate: subDays(new Date(), ENTRY_FETCH_LIMIT),
-					},
-				}
-			);
-
-			// transform into chart data
-			return Array.from({ length: ENTRY_FETCH_LIMIT }).map((_, index) => {
-				const targetDate = subDays(new Date(), ENTRY_FETCH_LIMIT - (index + 1));
-
-				if (hasActivityOnDate(logEntries, targetDate)) {
-					return {
-						name: format(targetDate, 'iii, do'),
-						// 'did something',
-						activity: 100,
-					};
-				}
-
-				return {
-					name: format(targetDate, 'iii, do'),
-					// 'did nothing',
-					activity: 0,
-				};
-			});
-		}
-	);
 
 	const handleCreateNewEntry = async () => {
 		try {
 			const token = await getAccessTokenSilently();
 
 			await axios.post(
-				`${API_URL}/api/v1/users/${user.sub}/goals/log-entries`,
+				`${API_URL}/api/v1/users/${user.sub}/goals/${goal.id}/log-entries`,
 				{},
 				{
 					headers: {
@@ -87,6 +38,7 @@ const LogEntries = ({ goal }) => {
 			);
 
 			queryClient.invalidateQueries('logEntries/chartData');
+			queryClient.invalidateQueries(`goals/${goal.id}`);
 
 			toast({
 				title: `New entry!`,
@@ -97,7 +49,6 @@ const LogEntries = ({ goal }) => {
 				position: 'bottom',
 			});
 		} catch (error) {
-			console.log(error);
 			toast({
 				title: `Error adding new entry`,
 				status: 'error',
@@ -127,7 +78,6 @@ const LogEntries = ({ goal }) => {
 				<Flex direction='column' width='100%'>
 					{
 						{
-							// success: <LogEntryChart data={data} />,
 							success: (
 								<Box overflowX='scroll'>
 									<LogEntryChart data={chartData} />
@@ -135,7 +85,7 @@ const LogEntries = ({ goal }) => {
 							),
 							error: <Text>Error fetching recent log entries</Text>,
 							loading: <Spinner />,
-						}[status]
+						}[chartDataStatus]
 					}
 				</Flex>
 			</Flex>

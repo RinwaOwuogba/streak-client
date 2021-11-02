@@ -4,11 +4,14 @@ import { useAuth0 } from '@auth0/auth0-react';
 import { useQuery, useQueryClient } from 'react-query';
 import axios from 'axios';
 import { Spinner, Flex, useDisclosure, useToast } from '@chakra-ui/react';
+import { format, subDays } from 'date-fns';
+// import subDays from 'date-fns/subDays';
 import { API_URL } from '../config';
 import LoaderError from '../components/loader-error';
 import GoalDeleteDialog from '../components/goal-delete-dialog';
 import GoalBody from '../components/goal-body';
 import GoalBodyHeader from '../components/goal-body-header';
+import hasActivityOnDate from '../utils';
 
 const GoalDetails = () => {
 	const queryClient = useQueryClient();
@@ -35,6 +38,51 @@ const GoalDetails = () => {
 
 		return responseData.goal;
 	});
+
+	const ENTRY_FETCH_LIMIT = 7;
+
+	const { data: chartData, status: chartDataStatus } = useQuery(
+		'logEntries/chartData',
+		async () => {
+			const token = await getAccessTokenSilently();
+
+			// fetch recent log entries
+			const {
+				data: { logEntries },
+			} = await axios.get(
+				`${API_URL}/api/v1/users/${user.sub}/goals/${goal.id}/log-entries`,
+				{
+					headers: {
+						Authorization: `Bearer ${token}`,
+					},
+					params: {
+						limit: ENTRY_FETCH_LIMIT,
+						skip: 0,
+						startDate: subDays(new Date(), ENTRY_FETCH_LIMIT),
+					},
+				}
+			);
+
+			// transform into chart data
+			return Array.from({ length: ENTRY_FETCH_LIMIT }).map((_, index) => {
+				const targetDate = subDays(new Date(), ENTRY_FETCH_LIMIT - (index + 1));
+
+				if (hasActivityOnDate(logEntries, targetDate)) {
+					return {
+						name: format(targetDate, 'iii, do'),
+						// 'did something',
+						activity: 100,
+					};
+				}
+
+				return {
+					name: format(targetDate, 'iii, do'),
+					// 'did nothing',
+					activity: 0,
+				};
+			});
+		}
+	);
 
 	/**
 	 * Handles user confirmed goal deletion
@@ -125,7 +173,13 @@ const GoalDetails = () => {
 								goalName={goal?.name}
 								handleUpdateGoal={handleUpdateGoal}
 							/>
-							<GoalBody goal={goal} onDeleteGoal={onOpen} />
+							<GoalBody
+								goal={goal}
+								onDeleteGoal={onOpen}
+								chartData={chartData}
+								chartDataStatus={chartDataStatus}
+							/>
+							<p>haha</p>
 							<GoalDeleteDialog
 								isOpen={isOpen}
 								onClose={onClose}

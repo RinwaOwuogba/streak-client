@@ -12,19 +12,18 @@ const queryClient = new QueryClient();
 const App = () => {
 	const { isLoading } = useAuth0();
 
-	// if (isLoading)	 {
-	// 	return <Loading />;
-	// }
+	if (isLoading) {
+		return <Loading />;
+	}
 
 	return (
 		<QueryClientProvider client={queryClient}>
 			<NavBar />
 			<Switch>
 				<Route path='/' exact component={Info} />
-				{/* // TODO: separate goals drawer into separate page */}
-				<Route path='/home' exact component={Home} />
-				<Route path='/goals' exact component={Goals} />
-				<Route path='/goals/:goalId' exact component={GoalDetails} />
+				<ProtectedRoute path='/home' exact component={Home} />
+				<ProtectedRoute path='/goals' exact component={Goals} />
+				<ProtectedRoute path='/goals/:goalId' exact component={GoalDetails} />
 			</Switch>
 		</QueryClientProvider>
 	);

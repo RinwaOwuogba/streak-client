@@ -85,6 +85,7 @@ const Goals = () => {
 				fontSize='xl'
 				fontWeight='medium'
 				casing='uppercase'
+				mb='5'
 			>
 				Goals
 			</Text>

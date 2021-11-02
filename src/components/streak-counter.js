@@ -7,27 +7,15 @@ const ActiveStreakLightning = ({ fill }) => (
 	<Icon as={BsFillLightningChargeFill} fill={fill} w='150px' h='150px' mb='5' />
 );
 
-const StreakCounter = ({
-	activeStreaks = [
-		{
-			name: 'Jogging',
-			days: '100',
-		},
-		{
-			name: 'Eating right',
-			days: '100',
-		},
-	],
-	longestOngoingStreak = {
-		name: 'Jogging',
-		days: '100',
-	},
-}) => {
+const StreakCounter = ({ activeStreaks, longestOngoingStreak }) => {
 	if (!longestOngoingStreak)
 		return (
 			<Flex alignItems='center' padding='5' direction='column'>
 				<ActiveStreakLightning fill='gray.200' />
-				<Text>You're not currently on any streak</Text>
+
+				<Text as='i' color='gray.300' fontWeight='bold' textAlign='center'>
+					You're not currently on any streak
+				</Text>
 			</Flex>
 		);
 
@@ -35,12 +23,17 @@ const StreakCounter = ({
 		return (
 			<Flex alignItems='center' padding='5' direction='column'>
 				<ActiveStreakLightning fill='red.500' />
+
 				<Text>You&apos;re on a </Text>
 				<Text fontWeight='bold' fontSize='7xl' wordBreak='break-word'>
-					{longestOngoingStreak.days}-day
-				</Text>{' '}
+					{longestOngoingStreak.ongoingStreak}-day
+				</Text>
+
 				<Text>
-					"{longestOngoingStreak.name}" streak{' '}
+					<Text as='span' fontWeight='bold'>
+						{longestOngoingStreak.name}
+					</Text>{' '}
+					streak{' '}
 					<span as='span' role='img' aria-label='three fire emojis'>
 						🔥🔥
 					</span>
@@ -51,13 +44,16 @@ const StreakCounter = ({
 	return (
 		<Flex alignItems='center' padding='5' direction='column'>
 			<ActiveStreakLightning fill='red.500' />
+
 			<Text>You&apos;re on a </Text>
+
 			<Text fontWeight='bold' fontSize='7xl' wordBreak='break-word'>
-				{longestOngoingStreak.days}-day
+				{longestOngoingStreak.ongoingStreak}-day
 			</Text>
+
 			<Text>
 				<Text fontWeight='bold' as='span'>
-					{longestOngoingStreak.name}
+					{longestOngoingStreak.name}{' '}
 				</Text>
 				streak and several others!{' '}
 				<span as='span' role='img' aria-label='three fire emojis'>
