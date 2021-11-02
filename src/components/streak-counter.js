@@ -1,4 +1,3 @@
-/* eslint-disable react/no-unescaped-entities */
 import React from 'react';
 import { Flex, Icon, Text } from '@chakra-ui/react';
 import { BsFillLightningChargeFill } from 'react-icons/bs';
@@ -14,7 +13,7 @@ const StreakCounter = ({ activeStreaks, longestOngoingStreak }) => {
 				<ActiveStreakLightning fill='gray.200' />
 
 				<Text as='i' color='gray.300' fontWeight='bold' textAlign='center'>
-					You're not currently on any streak
+					You&apos;re not currently on any streak
 				</Text>
 			</Flex>
 		);

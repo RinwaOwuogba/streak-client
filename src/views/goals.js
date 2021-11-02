@@ -9,10 +9,8 @@ import GoalsList from '../components/goals-list';
 import NewGoalModal from '../components/new-goal-modal';
 
 const Goals = () => {
-	const { user: authUser } = useAuth0();
+	const { user } = useAuth0();
 	const queryClient = useQueryClient();
-
-	const user = authUser || { id: 'kl' };
 
 	const toast = useToast();
 	const [isNewGoalModelOpen, setIsNewGoalModalOpen] = useState(false);

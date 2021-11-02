@@ -5,7 +5,6 @@ import { useQuery, useQueryClient } from 'react-query';
 import axios from 'axios';
 import { Spinner, Flex, useDisclosure, useToast } from '@chakra-ui/react';
 import { format, subDays } from 'date-fns';
-// import subDays from 'date-fns/subDays';
 import { API_URL } from '../config';
 import LoaderError from '../components/loader-error';
 import GoalDeleteDialog from '../components/goal-delete-dialog';
@@ -162,6 +161,45 @@ const GoalDetails = () => {
 		}
 	};
 
+	/**
+	 * Create new log entry for current date
+	 */
+	const handleCreateNewEntry = async () => {
+		try {
+			const token = await getAccessTokenSilently();
+
+			await axios.post(
+				`${API_URL}/api/v1/users/${user.sub}/goals/${goal.id}/log-entries`,
+				{},
+				{
+					headers: {
+						Authorization: `Bearer ${token}`,
+					},
+				}
+			);
+
+			queryClient.invalidateQueries('logEntries/chartData');
+			queryClient.invalidateQueries(`goals/${goal.id}`);
+
+			toast({
+				title: `New entry!`,
+				description: `New "${goal.name}" entry added for today!`,
+				status: 'success',
+				duration: 1500,
+				isClosable: true,
+				position: 'bottom',
+			});
+		} catch (error) {
+			toast({
+				title: `Error adding new entry`,
+				status: 'error',
+				duration: 3000,
+				isClosable: true,
+				position: 'bottom',
+			});
+		}
+	};
+
 	return (
 		<Flex padding='5' justifyContent='center'>
 			{
@@ -178,8 +216,8 @@ const GoalDetails = () => {
 								onDeleteGoal={onOpen}
 								chartData={chartData}
 								chartDataStatus={chartDataStatus}
+								handleCreateNewEntry={handleCreateNewEntry}
 							/>
-							<p>haha</p>
 							<GoalDeleteDialog
 								isOpen={isOpen}
 								onClose={onClose}

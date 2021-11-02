@@ -2,7 +2,13 @@ import React from 'react';
 import { Text, Button, Box } from '@chakra-ui/react';
 import LogEntries from './log-entries';
 
-const GoalBody = ({ goal, onDeleteGoal, chartData, chartDataStatus }) => (
+const GoalBody = ({
+	goal,
+	onDeleteGoal,
+	chartData,
+	chartDataStatus,
+	handleCreateNewEntry,
+}) => (
 	<>
 		<Text as='i' color='gray.400' mb='10'>
 			Started: {new Date(goal.createdAt).toDateString()}{' '}
@@ -23,6 +29,7 @@ const GoalBody = ({ goal, onDeleteGoal, chartData, chartDataStatus }) => (
 				goal={goal}
 				chartData={chartData}
 				chartDataStatus={chartDataStatus}
+				handleCreateNewEntry={handleCreateNewEntry}
 			/>
 		</Box>
 
