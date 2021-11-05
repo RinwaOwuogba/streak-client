@@ -8,6 +8,10 @@ const MainNav = () => {
 
 	return isAuthenticated ? (
 		<>
+			<Link as={NavLink} to='/' exact>
+				About
+			</Link>
+
 			<Link as={NavLink} to='/home' exact>
 				Home
 			</Link>

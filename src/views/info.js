@@ -8,9 +8,14 @@ const Info = () => (
 				Welcome to Streak!
 			</Text>
 
-			<Text>
+			<Text mb='10'>
 				Streak helps track your consistent effort towards your goals. Login to
 				get started
+			</Text>
+
+			<Text>
+				Users can create goals and create daily entries representing some sort
+				of action towards each goal
 			</Text>
 		</Flex>
 	</Center>

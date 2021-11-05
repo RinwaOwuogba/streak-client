@@ -25,6 +25,9 @@ const MobileMenu = () => {
 			<MenuList>
 				{isAuthenticated ? (
 					<>
+						<MenuItem as={NavLink} to='/' exact>
+							About
+						</MenuItem>
 						<MenuItem as={NavLink} to='/home' exact>
 							Home
 						</MenuItem>
