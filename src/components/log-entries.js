@@ -1,7 +1,11 @@
 import React from 'react';
 import { Flex, Text, Button, Icon, Spinner, Box } from '@chakra-ui/react';
+import { isToday } from 'date-fns';
 import { MdAdd } from 'react-icons/md';
 import LogEntryChart from './log-entry-chart';
+
+const hasActivityToday = (chartData) =>
+	chartData.find((entry) => isToday(entry.date));
 
 const LogEntries = ({ chartData, chartDataStatus, handleCreateNewEntry }) => (
 	<>
@@ -14,6 +18,7 @@ const LogEntries = ({ chartData, chartDataStatus, handleCreateNewEntry }) => (
 					onClick={handleCreateNewEntry}
 					variant='outline'
 					fontSize='sm'
+					isDisabled={hasActivityToday(chartData)}
 				>
 					New entry
 				</Button>

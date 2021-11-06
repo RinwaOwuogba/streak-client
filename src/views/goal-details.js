@@ -71,6 +71,7 @@ const GoalDetails = () => {
 						name: format(targetDate, 'iii, do'),
 						// 'did something',
 						activity: 100,
+						date: targetDate,
 					};
 				}
 
@@ -78,6 +79,7 @@ const GoalDetails = () => {
 					name: format(targetDate, 'iii, do'),
 					// 'did nothing',
 					activity: 0,
+					date: targetDate,
 				};
 			});
 		}
