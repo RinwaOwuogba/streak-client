@@ -41,7 +41,7 @@ const GoalDetails = () => {
 	const ENTRY_FETCH_LIMIT = 7;
 
 	const { data: chartData, status: chartDataStatus } = useQuery(
-		'logEntries/chartData',
+		`${goalId}/logEntries/chartData`,
 		async () => {
 			const token = await getAccessTokenSilently();
 
@@ -49,7 +49,7 @@ const GoalDetails = () => {
 			const {
 				data: { logEntries },
 			} = await axios.get(
-				`${API_URL}/api/v1/users/${user.sub}/goals/${goal.id}/log-entries`,
+				`${API_URL}/api/v1/users/${user.sub}/goals/${goalId}/log-entries`,
 				{
 					headers: {
 						Authorization: `Bearer ${token}`,
@@ -180,7 +180,7 @@ const GoalDetails = () => {
 				}
 			);
 
-			queryClient.invalidateQueries('logEntries/chartData');
+			queryClient.invalidateQueries(`${goal.id}/logEntries/chartData`);
 			queryClient.invalidateQueries(`goals/${goal.id}`);
 
 			toast({

@@ -37,6 +37,7 @@ const Goals = () => {
 		clearErrors();
 		setIsNewGoalModalOpen(true);
 	};
+
 	const handleCreateNewGoal = async (formData) => {
 		try {
 			const token = await getAccessTokenSilently();

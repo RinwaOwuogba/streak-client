@@ -5,7 +5,7 @@ import { MdAdd } from 'react-icons/md';
 import LogEntryChart from './log-entry-chart';
 
 const hasActivityToday = (chartData) =>
-	chartData.find((entry) => isToday(entry.date));
+	chartData.find((entry) => isToday(entry.date) && entry.activity === 100);
 
 const LogEntries = ({ chartData, chartDataStatus, handleCreateNewEntry }) => (
 	<>
@@ -18,7 +18,7 @@ const LogEntries = ({ chartData, chartDataStatus, handleCreateNewEntry }) => (
 					onClick={handleCreateNewEntry}
 					variant='outline'
 					fontSize='sm'
-					isDisabled={hasActivityToday(chartData)}
+					isDisabled={hasActivityToday(chartData || [])}
 				>
 					New entry
 				</Button>
